@@ -21,6 +21,9 @@ state_token = None
 auth_flow = AuthorizationCodeGrant(client_id, scopes, client_secret, redirect_url, state_token)
 auth_url = auth_flow.get_authorization_url()
 
+start = [-37.818182, 144.968484]  # lat lng of user's location at last pub
+end = [-37.809419, 144.969887]  # user's home address lat lng
+
 
 @app.route("/")
 def demo():
@@ -55,13 +58,15 @@ def callback():
     access_token = tokens['access_token']
     callUber(access_token)
 
+    return redirect("https://riders.uber.com/trips?offset=0")
+
 
 def callUber(access_token):
     api_call_headers = {'Authorization': 'Bearer ' + access_token}
     api_url = "https://sandbox-api.uber.com/v1.2"
 
-    start = [-37.818182, 144.968484]  # lat lng of user's location at last pub
-    end = [-37.809419, 144.969887]  # user's home address lat lng
+    # start = [-37.818182, 144.968484]  # lat lng of user's location at last pub
+    # end = [-37.809419, 144.969887]  # user's home address lat lng
 
     session = Session(server_token="CUofQlGNUbYK3x9FjX0AtlFjEJCak4O59V61YeGs")
     client = UberRidesClient(session, sandbox_mode=True)
