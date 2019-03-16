@@ -6,6 +6,7 @@ from flask import Flask, request, redirect, session, url_for
 from flask.json import jsonify
 import os
 import requests, json
+import webbrowser
 
 app = Flask(__name__)
 
@@ -58,6 +59,8 @@ def callback():
     access_token = tokens['access_token']
     # print(access_token)
     callUber(access_token)
+
+    # return True
 
 
 def callUber(access_token):
@@ -116,6 +119,18 @@ def callUber(access_token):
     # make the fake request
     r = requests.post(api_url + "/requests", headers=fare_headers, data=json.dumps(data))
     print("hello")
+
+    # get the map for the request
+    # request_id = json.loads(r.content)['request_id']
+    # get_map = requests.get(api_url + "/requests/" + request_id + "/map", headers=fare_headers)
+    # map_url = json.loads(get_map.content)['href']
+    # webbrowser.open(map_url)
+
+    # delete the fake request after
+    delete = requests.delete(api_url + "/requests/current", headers=fare_headers)
+    print('delete done')
+
+    # return True
 
 
 
