@@ -56,7 +56,7 @@ def callback():
     access_token = tokens['access_token']
     callUber(access_token)
 
-    # return True
+    return "Hello World"
 
 
 def callUber(access_token):
@@ -107,9 +107,13 @@ def callUber(access_token):
 
     # make the fake request
     r = requests.post(api_url + "/requests", headers=fare_headers, data=json.dumps(request_data))
+    request_id = json.loads(r.content)['request_id']
+
+    # # change request to accepted, arriving
+    accept = requests.put(api_url + "/sandbox/requests/" + request_id, headers=fare_headers, data=json.dumps({"status": "accepted"}))
+    # arrive = requests.put(api_url + "/sandbox/requests/" + request_id, headers=fare_headers, data=json.dumps({"status": "arriving"}))
 
     # get the map for the request
-    # request_id = json.loads(r.content)['request_id']
     # get_map = requests.get(api_url + "/requests/" + request_id + "/map", headers=fare_headers)
     # map_url = json.loads(get_map.content)['href']
     # webbrowser.open(map_url)
@@ -117,8 +121,6 @@ def callUber(access_token):
     # delete the fake request after
     delete = requests.delete(api_url + "/requests/current", headers=fare_headers)
     print('delete done')
-
-    # return True
 
 
 
