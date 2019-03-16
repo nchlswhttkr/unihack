@@ -8,8 +8,8 @@ session = Session(server_token="CUofQlGNUbYK3x9FjX0AtlFjEJCak4O59V61YeGs")
 client = UberRidesClient(session)
 
 # get user to log in
-url = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=bNuMgUk4XDsvlVbnnLtJwwEitiflHMPG&scope" \
-      "=history+history_lite+places+profile+request_receipt&redirect_uri=http://localhost:3000"
+url = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=bNuMgUk4XDsvlVbnnLtJwwEitiflHMPG&scope=" \
+      "history+history_lite+places+profile+request_receipt&redirect_uri=http://localhost:3000"
 webbrowser.open(url)
 print()
 
