@@ -21,6 +21,10 @@ state_token = None
 auth_flow = AuthorizationCodeGrant(client_id, scopes, client_secret, redirect_url, state_token)
 auth_url = auth_flow.get_authorization_url()
 
+#Location state
+pickup_state = {'lat': '-37.818182', 'long': '144.968484'}
+home_state = {'lat': '-37.809419', 'long': '144.969887'}
+
 start = [-37.818182, 144.968484]  # lat lng of user's location at last pub
 end = [-37.809419, 144.969887]  # user's home address lat lng
 
@@ -39,6 +43,11 @@ def demo():
 
     return redirect(authorization_url)
 
+@app.route("/calluberfrom",methods=["GET"])
+def calluberfrom():
+    pickup_state['lat']=request.args.get('lat')
+    pickup_state['long']=request.args.get('long')
+    return redirect('/')
 
 # Step 2: User authorization, this happens on the provider.
 @app.route("/uber/success", methods=["GET"])
@@ -65,8 +74,8 @@ def callUber(access_token):
     api_call_headers = {'Authorization': 'Bearer ' + access_token}
     api_url = "https://sandbox-api.uber.com/v1.2"
 
-    # start = [-37.818182, 144.968484]  # lat lng of user's location at last pub
-    # end = [-37.809419, 144.969887]  # user's home address lat lng
+    start = [pickup_state['lat'], pickup_state['long']]  # lat lng of user's location at last pub
+    end = [home_state['lat'], home_state['long']]  # user's home address lat lng
 
     session = Session(server_token="CUofQlGNUbYK3x9FjX0AtlFjEJCak4O59V61YeGs")
     client = UberRidesClient(session, sandbox_mode=True)
@@ -110,7 +119,11 @@ def callUber(access_token):
     # make the fake request
     r = requests.post(api_url + "/requests", headers=fare_headers, data=json.dumps(request_data))
 
-
+@app.route("/update/home",methods=["GET"])
+def updatehome():
+    home_state['lat']=request.args.get('lat')
+    home_state['long']=request.args.get('long')
+    return "Updated home location: "+json.dumps(home_state)
 
 if __name__ == "__main__":
     # This allows us to use a plain HTTP callback
