@@ -68,7 +68,7 @@ def callback():
     callUber(access_token)
 
     return redirect("https://riders.uber.com/trips?offset=0")
-
+gi
 
 def callUber(access_token):
     api_call_headers = {'Authorization': 'Bearer ' + access_token}
