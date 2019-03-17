@@ -41,7 +41,7 @@ class List extends Component {
         <button onClick={this.props.feelingLucky} className={`feelingLuckyButton`}>
           I'm Feeling Bendy
         </button>
-          <a href="localhost:5000/calluberfrom?lat=-37.818182&long=144.968484" className="button">Call Uber</a>
+          <a href="localhost:5000/calluberfrom?lat=-37.818182&long=144.968484" id = "uberButton" className="button">Call Uber</a>
           <span />
         {chosenBarsDisplay}
         <span />

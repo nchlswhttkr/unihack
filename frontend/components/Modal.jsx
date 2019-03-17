@@ -8,14 +8,11 @@ class Modal extends Component {
         }
 
         return (
-            <div className="backdrop">
-                <div className="modal">
-
-                    <div className="footer">
-                        <button onClick={this.props.onClose}>
-                            Close
-                        </button>
-                    </div>
+            <div className="modal">
+                <div className="footer">
+                    <button onClick={this.props.onClose}>
+                        Close
+                    </button>
                 </div>
             </div>
         );
