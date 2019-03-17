@@ -3,6 +3,7 @@ import Map from "./Map.jsx";
 import Search from "./Search.jsx";
 import List from "./List.jsx";
 import Options from "./Options.jsx";
+import Modal from "./Modal.jsx";
 import { apiKey } from "../apiKey.json";
 const TravellingDrunkard = require("../logic/TravellingDrunkard");
 
@@ -26,10 +27,12 @@ class PageContent extends Component {
         lng: 0
       },
       hangoverMode: false,
-      hoursCheck:  false
+      hoursCheck:  false,
+      // isOpen: false
     };
 
-    this.onHoursChecked = this.onHoursChecked.bind(this);
+    this.onHoursChecked = this.onHoursChecked.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
 
     this.moveCamera = (callback) => {
       fetch(
@@ -186,6 +189,12 @@ class PageContent extends Component {
     });
   }
 
+  toggleModal () {
+    this.setState(prevState => {
+      return {isOpen: !prevState.isOpen}
+    });
+  }
+
   render() {
     let availableBars;
     if (this.state.hoursCheck) {
@@ -232,6 +241,15 @@ class PageContent extends Component {
             isHoursCheck = {this.state.hoursCheck}
             onHoursChecked = {this.onHoursChecked}
         />
+
+        <button id = "popupToggle" onClick={this.toggleModal}>
+          Enter home address
+        </button>
+
+        <Modal show={this.state.isOpen}
+               onClose={this.toggleModal}>
+          Here's some content for the modal
+        </Modal>
       </div>
     );
   }
